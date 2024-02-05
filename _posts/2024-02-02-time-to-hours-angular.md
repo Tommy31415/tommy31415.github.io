@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: default
 title: Kendo Circural and time in seconds that cross midnight
 date: 2024-02-02
 categories: typescript
