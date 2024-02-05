@@ -1,3 +1,10 @@
+---
+layout: post
+title: Kendo Circural and time in seconds that cross midnight
+date: 2024-02-02
+categories: typescript
+---
+
 # Kendo Circural and time in seconds that cross midnight
 
 Input values are negative and positive. Negative values happened before midnight and positive after.

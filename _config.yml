@@ -4,3 +4,4 @@ plugins:
 title: Code snippets
 description: Just some snippets
 show_downloads: false
+baseurl: docs
