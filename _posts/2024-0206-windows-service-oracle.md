@@ -117,3 +117,101 @@ public class DatabaseRetryLogic
 In this example, `PerformDatabaseOperationWithRetry` attempts to perform a database operation, with retry logic for handling transient errors. The `IsTransientError` method is a placeholder where you'd add logic to determine if an Oracle exception is considered transient, based on its error number or other properties.
 
 Remember, the specifics of what constitutes a transient error can vary based on your Oracle database setup, the network environment, and the nature of the operations your service is performing. You may need to adjust the logic based on the errors you're encountering in your specific context.
+
+# Entity Framwork (.Net Framework 4.8)
+
+When working with a Windows Service implemented in .NET Framework 4.8 and wanting to use Entity Framework (EF) for database operations, including implementing retry logic for Oracle database connections, the approach slightly differs from .NET Core/EF Core since EF Core's built-in retry mechanism isn't directly available in Entity Framework 6 (EF6) or earlier versions. However, you can still achieve a robust solution with a bit of custom implementation.
+
+### Step 1: Configuring DbContext with Oracle Database
+
+Firstly, ensure you have the correct Oracle provider for Entity Framework in your .NET Framework project. Oracle offers the official `Oracle.ManagedDataAccess.EntityFramework` NuGet package that works with Entity Framework 6.
+
+You can configure your `DbContext` in a similar way, but the configuration will be slightly different compared to EF Core. Here’s an example of how you might configure your `DbContext`:
+
+```csharp
+using System.Data.Entity;
+using Oracle.ManagedDataAccess.Client;
+// Other using directives as needed
+
+public class YourDbContext : DbContext
+{
+    public YourDbContext() : base(new OracleConnection("User Id=userid; Password=password; Data Source=datasource;"), true)
+    {
+        // Configuration settings like lazy loading, proxy creation etc.
+    }
+    
+    // DbSets and model configuration
+}
+```
+
+### Step 2: Implementing Retry Logic in .NET Framework
+
+Since EF6 does not have the same built-in support for automatic retries on transient errors, you will need to implement retry logic manually. One common approach is to create a helper method that encapsulates the retry logic and wraps your database operations. Here's a simplified version of how you could implement it:
+
+```csharp
+using System;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.SqlServer;
+using System.Threading.Tasks;
+
+public static class RetryHelper
+{
+    public static TResult ExecuteWithRetry<TResult>(Func<TResult> operation, int maxAttempts = 3, int delayMilliseconds = 1000)
+    {
+        var attempts = 0;
+        
+        while (true)
+        {
+            try
+            {
+                return operation();
+            }
+            catch (Exception ex)
+            {
+                if (++attempts >= maxAttempts || !IsTransient(ex))
+                    throw;
+                
+                Task.Delay(delayMilliseconds).Wait(); // Wait before retrying
+                delayMilliseconds *= 2; // Increase delay for next attempt
+            }
+        }
+    }
+
+    private static bool IsTransient(Exception ex)
+    {
+        // Check if the exception is considered transient
+        // This could be expanded based on the specific exceptions Oracle throws that are considered transient
+        return ex is TimeoutException || (ex is SqlException && IsTransientSqlException(ex as SqlException));
+    }
+
+    private static bool IsTransientSqlException(SqlException ex)
+    {
+        // Here you'd check the SQL exception number to determine if it's considered transient
+        // Refer to Oracle / SQL Server documentation for numbers indicating transient faults
+        return false; // Simplified; actual implementation needed based on Oracle error codes
+    }
+}
+```
+
+### Using the Retry Logic
+
+You can use the `ExecuteWithRetry` method to wrap any database operation. For example:
+
+```csharp
+var result = RetryHelper.ExecuteWithRetry(() => 
+{
+    using (var context = new YourDbContext())
+    {
+        // Perform database operations
+        return context.Employees.ToList();
+    }
+});
+```
+
+### Important Considerations
+
+- **Transient Error Identification**: Properly identifying transient errors specific to Oracle databases is crucial. You need to adjust the `IsTransient` and `IsTransientSqlException` methods to correctly identify and handle Oracle's transient exceptions.
+- **Synchronous vs. Asynchronous**: The example provided is synchronous for simplicity. Depending on your application's requirements, you may need to implement an asynchronous version of the retry logic.
+- **Error Handling**: Ensure robust error handling and logging around your retry logic to diagnose issues in production environments effectively.
+
+By manually implementing and utilizing such retry logic, your .NET Framework-based Windows Service can more reliably handle transient database connection issues with Oracle.
