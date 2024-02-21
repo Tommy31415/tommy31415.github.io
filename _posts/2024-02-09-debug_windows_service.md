@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: Debug windows service
 date: 2024-02-09
 categories: csharp

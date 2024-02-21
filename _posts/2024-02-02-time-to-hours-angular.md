@@ -1,9 +1,10 @@
 ---
-layout: default
+layout: post
 title: Kendo Circural and time in seconds that cross midnight
 date: 2024-02-02
-categories: typescript
+categories: typescript chatgpt
 ---
+
 
 # Kendo Circural and time in seconds that cross midnight
 

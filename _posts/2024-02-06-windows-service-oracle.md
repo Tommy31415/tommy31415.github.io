@@ -2,7 +2,7 @@
 layout: post
 title: Windows Service and managing connection to Oracle
 date: 2024-02-06
-categories: csharp
+categories: csharp chatgpt
 ---
 
 # Manage DB connection in Windows Service
@@ -215,3 +215,7 @@ var result = RetryHelper.ExecuteWithRetry(() =>
 - **Error Handling**: Ensure robust error handling and logging around your retry logic to diagnose issues in production environments effectively.
 
 By manually implementing and utilizing such retry logic, your .NET Framework-based Windows Service can more reliably handle transient database connection issues with Oracle.
+
+# Final solution
+
+It occured that Entity Framwork handles connection pretty well. I discovered that problem was that it worked as a infinite loop and there was catch on Oracle and Enity exceptions. Unhandled exception was stopping loop of a service that was connecting and fetching data from Oracle.  
