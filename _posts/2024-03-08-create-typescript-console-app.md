@@ -5,7 +5,7 @@ date: 2024-03-08
 categories: typescript
 ---
 
-#How to set up Node.js project with Typescript
+## How to set up Node.js project with Typescript
 
 First you have to initialize project with:
 
@@ -49,7 +49,7 @@ Define scripts target:
 },
   ```
 
-##Add ESlint
+## Add ESlint
 
 Install packackes 
 
