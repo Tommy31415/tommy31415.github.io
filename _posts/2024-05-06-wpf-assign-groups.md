@@ -9,30 +9,33 @@ categories: wpf
 
 
 ```xml
-<Window x:Class="YourNamespace.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-        Title="User Management" Height="450" Width="800">
-    <Grid>
-        <!-- Filter Controls -->
-        <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0 0 10 0"/>
-            <telerik:RadComboBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" DisplayMemberPath="Name" Width="200"/>
-        </StackPanel>
-
-        <!-- User List -->
-        <telerik:RadGridView ItemsSource="{Binding FilteredUsers}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" Margin="10">
-            <!-- Define Columns -->
-        </telerik:RadGridView>
-
-        <!-- Group Assignment -->
-        <StackPanel Orientation="Horizontal" Margin="10">
-            <telerik:RadListBox ItemsSource="{Binding Groups}" SelectedItems="{Binding SelectedGroups}" DisplayMemberPath="Name" Width="200"/>
-            <Button Content="Assign Groups" Command="{Binding AssignGroupsCommand}" Margin="10 0"/>
-        </StackPanel>
+<Grid>
+    <!-- Filter Controls -->
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="0 0 10 0"/>
+        <telerik:RadComboBox ItemsSource="{Binding Groups}" SelectedItem="{Binding SelectedGroup}" DisplayMemberPath="Name" Width="200" Grid.Column="1"/>
     </Grid>
-</Window>
+
+    <!-- User List -->
+    <telerik:RadGridView ItemsSource="{Binding FilteredUsers}" SelectedItem="{Binding SelectedUser}" AutoGenerateColumns="False" Margin="10" Grid.Row="1">
+        <!-- Define Columns -->
+    </telerik:RadGridView>
+
+    <!-- Group Assignment -->
+    <Grid Margin="10" Grid.Row="2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <telerik:RadListBox ItemsSource="{Binding Groups}" x:Name="radListBox" DisplayMemberPath="Name" Width="200"/>
+        <Button Content="Assign Groups" Command="{Binding AssignGroupsCommand}" Margin="10 0" Grid.Column="1"/>
+    </Grid>
+</Grid>
+
 ```
 
 ## Initial backend design
