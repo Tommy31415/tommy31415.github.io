@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="400" viewBox="0 0 800 400">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="60" y="60" width="220" height="260" rx="6" fill="#edf2f7" stroke="#cbd5e1" />
+    <text x="170" y="90" font-size="16" fill="#2d3748" text-anchor="middle">MQ Queue Manager</text>
+
+    <rect x="320" y="60" width="220" height="120" rx="6" fill="#f7fafc" stroke="#cbd5e1" />
+    <text x="430" y="90" font-size="14" fill="#2d3748" text-anchor="middle">Channel Config</text>
+
+    <rect x="320" y="200" width="220" height="120" rx="6" fill="#f7fafc" stroke="#cbd5e1" />
+    <text x="430" y="230" font-size="14" fill="#2d3748" text-anchor="middle">Listener / Port</text>
+
+    <line x1="280" y1="190" x2="320" y2="120" stroke="#4a5568" stroke-width="2" />
+    <text x="190" y="180" font-size="12" fill="#4a5568" text-anchor="middle">Queues</text>
+
+    <text x="170" y="240" font-size="12" fill="#4a5568" text-anchor="middle">Bindings, Persistence, Security</text>
+  </g>
+
+  <text x="400" y="30" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#2d3748" text-anchor="middle">IBM MQ - Config Overview</text>
+</svg>

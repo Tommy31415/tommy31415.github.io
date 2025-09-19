@@ -138,6 +138,22 @@ If the wrong client certificate is used, explicitly set CertificateLabel (and/or
 
 Review queue manager AMQERR01.LOG for messages like AMQ9631 (cipher mismatch) or AMQ9641/AMQ9633 (certificate chain issues).
 
+## Diagrams
+
+Here are two simple diagrams that illustrate the IBM MQ architecture and configuration discussed above:
+
+![IBM MQ architecture](/assets/images/ibm-mq-xms/ibm-mq-architecture.svg)
+
+![IBM MQ config overview](/assets/images/ibm-mq-xms/ibm-mq-config.svg)
+
+![Test 1](/assets/images/ibm-mq-xms/892947d2-7f9e-4536-b000-9e48e17cd2d6.png.jpeg)
+
+![Test 2](/assets/images/ibm-mq-xms/55692773-4bd9-4744-ac32-46a76ef8e708.png.jpeg)
+
+
+
+
+
 
 
 
